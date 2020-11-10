@@ -1,0 +1,28 @@
+td:first-child{
+    text-align: right;
+    border: none;
+}
+
+td{
+    text-align: center;
+    width: 8px;
+    height: 50px;
+}
+td:nth-child(even){
+    border-right: dashed 1px black;
+    border-left: solid 1px black;
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+}
+td:nth-child(2n+3){
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+}
+td:last-child{
+    border-right: solid 1px black;
+}
+table{
+    width: 500px;
+    margin: 0 auto;
+    border-collapse: collapse;
+}

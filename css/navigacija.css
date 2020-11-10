@@ -1,0 +1,25 @@
+nav{
+    width: max-content;
+    margin: 0 auto;
+    padding: 20px;
+}
+a{
+    font-family: Arial, Helvetica, sans-serif;
+    color: darkblue;
+    font-variant: small-caps;
+    padding: 0px 7px;
+    text-decoration: none;
+    transition: color 0.3s linear;
+    display: inline-block;
+}
+a:hover{
+    font-weight: bold;
+    color: cyan;
+}
+@media (max-width: 600px){
+    a{
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+}

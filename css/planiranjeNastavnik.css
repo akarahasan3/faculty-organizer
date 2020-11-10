@@ -1,0 +1,28 @@
+select, input{
+    width: 150px;
+    margin: 0 auto;
+}
+td:first-child{
+    text-align: right;
+}
+table{
+    width: 400px;
+    margin: 0 auto;
+}
+@media (max-width: 600px){
+    table, td{
+        width: 154px;
+        display: block;
+        margin: 0 auto;
+    }
+    td{
+        float: none;
+        width: 100%;
+    }
+    td:first-child{
+        text-align: center;
+    }
+    select, input{
+        margin-bottom: 20px;
+    }
+}
