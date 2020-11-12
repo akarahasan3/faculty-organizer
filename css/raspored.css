@@ -3,6 +3,13 @@ td:first-child{
     border: none;
 }
 
+tr:first-child>td{
+    border: none;
+    height: 7px;
+    padding: 0px;
+    background-color: white;
+}
+
 td{
     text-align: center;
     width: 8px;
@@ -13,10 +20,12 @@ td:nth-child(even){
     border-left: solid 1px black;
     border-top: solid 1px black;
     border-bottom: solid 1px black;
+    background-color: grey;
 }
 td:nth-child(2n+3){
     border-top: solid 1px black;
     border-bottom: solid 1px black;
+    background-color: grey;
 }
 td:last-child{
     border-right: solid 1px black;
@@ -25,4 +34,34 @@ table{
     width: 500px;
     margin: 0 auto;
     border-collapse: collapse;
+}
+#pred, #vjezbe, #tut{
+    background-color: lightblue;
+}
+@media (max-width: 600px){
+    table{
+        width: 75%;
+        margin: 0 auto;
+    }
+    td{
+        display: block;
+        width: 75%;
+        margin: 0 auto;
+        height: 50px;
+    }
+    tr:first-child{
+        display: none;
+    }
+    td:first-child{
+        text-align: center;
+    }
+    #pred{
+        height: 300px;
+    }
+    #tut{
+        height: 200px;
+    }
+    #vjezbe{
+        height: 150px;
+    }
 }
