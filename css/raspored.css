@@ -43,6 +43,9 @@ table{
         width: 75%;
         margin: 0 auto;
     }
+    tr:first-child>td{
+        padding-top: 20px;
+    }
     td{
         display: block;
         width: 75%;
@@ -64,4 +67,8 @@ table{
     #vjezbe{
         height: 150px;
     }
+    #prazan{
+        display: none;
+    }
+    
 }
