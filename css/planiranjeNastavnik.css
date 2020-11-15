@@ -1,9 +1,3 @@
-body{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-image: url("../pozadina.jpg");
-    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("../pozadina.jpg");
-    color: white;
-}
 select, input{
     width: 150px;
     margin: 0 auto;
@@ -15,18 +9,19 @@ select, input{
     transition: border-bottom 0.4s, border-radius 0.2s linear, border-right 0.7s, color 0.4s;
 }
 select:hover, input:hover{
-    border-bottom: solid 1px rgb(30, 2, 190);
-    border-right: solid 1px rgb(30, 2, 190);
+    border-bottom: solid 1px cyan;
+    border-right: solid 1px cyan;
     background: none;
-    color: rgb(53, 41, 219);
+    color: cyan;
     border-radius: 0px 0px 5px 0px;
 }
 td:first-child{
     text-align: right;
     transition: color 0.4s;
+    padding-right: 15px;
 }
 tr:hover>td{
-    color: rgb(53, 41, 219);
+    color: cyan;
 }
 td{
     padding-bottom: 10px;
@@ -34,9 +29,16 @@ td{
 table{
     width: 400px;
     margin: 0 auto;
-    border: solid 1px grey;
+    border: solid 1px white;
     border-radius: 15px;
     border-top: none;
+    transition: border-color 0.5s;
+}
+table:hover{
+    border-color: cyan;
+}
+select *{
+    background-color: rgb(0,0,0);
 }
 @media (max-width: 600px){
     table, td{
@@ -50,6 +52,7 @@ table{
     }
     td:first-child{
         text-align: center;
+        padding-right: 0px;
     }
     select, input{
         margin-bottom: 20px;

@@ -1,11 +1,12 @@
 table{
-    border-collapse: collapse;
     margin: 0 auto;
+    border-collapse: collapse;
 }
 td{
+    box-sizing: content-box;
     border: solid 1px white;
     text-align: center;
-    width: 130px;
+    width: 150px;
     height: 35px;
     transition: color 0.5s;
 }
