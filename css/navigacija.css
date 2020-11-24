@@ -1,12 +1,11 @@
 nav{
     width: max-content;
     margin: 0 auto;
-    padding: 10px;
-    margin-bottom: 25px;
+    padding: 20px;
 }
 a{
     font-family: Arial, Helvetica, sans-serif;
-    color: white;
+    color: darkblue;
     font-variant: small-caps;
     padding: 0px 7px;
     text-decoration: none;
@@ -14,7 +13,8 @@ a{
     display: inline-block;
 }
 a:hover{
-    color: rgb(53, 41, 219);
+    font-weight: bold;
+    color: cyan;
 }
 @media (max-width: 600px){
     a{

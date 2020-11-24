@@ -1,16 +1,14 @@
 table{
-    margin: 0 auto;
     border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
 }
 td{
-    box-sizing: content-box;
-    border: solid 1px white;
+    border: solid 1px black;
     text-align: center;
-    width: 150px;
+    width: 130px;
     height: 35px;
-    transition: color 0.5s;
 }
 tr:hover{
-    border: solid 2px white;
-    color: cyan;
+    border: solid 2px black;
 }

@@ -1,69 +1,51 @@
-.sr{
-    border-right: solid 1px white!important;
-}
-.sl{
-    border-left: solid 1px white!important;
-}
-.dr{
-    border-right: dashed 1px white!important;
-}
-.dl{
-    border-left: dashed 1px white!important;
-}
-.kraj{
-    border-right: dashed 1px white!important;
-}
 td:first-child{
     text-align: right;
     border: none;
-    font-size: 15px;
-    padding-right: 5px;
 }
+
 tr:first-child>td{
     border: none;
     height: 7px;
-    background-color: transparent;
-    font-size: 11px;
-}
-h4{
-    margin: 0px;
-    font-size: 15px;
-    font-weight: bold;
     padding: 0px;
-    color: rgb(22, 22, 22);
+    background-color: white;
 }
-p{
-    margin: 0px;
-    font-size: 11px;
-    padding: 0px;
-    color: rgb(65, 65, 65);
-}
+
 td{
     text-align: center;
-    width: 15px;
+    width: 18px;
     height: 50px;
-    box-sizing: unset;
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    border-right: dashed 1px black;
 }
+td[class$="0"]{
+    border-left: solid 1px black;
+    background-color: grey;
+}
+td[class$="5"]{
+    background-color: grey;
+}
+/*
 td:nth-child(even){
-    border-right: dashed 1px white;
-    border-left: solid 1px white;
-    border-top: solid 1px white;
-    border-bottom: solid 1px white;
-    background-color: rgb(153, 153, 153);
+    border-right: dashed 1px black;
+    border-left: solid 1px black;
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    background-color: grey;
 }
 td:nth-child(2n+3){
-    border-top: solid 1px white;
-    border-bottom: solid 1px white;
-    background-color:rgb(153, 153, 153);
-}
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    background-color: grey;
+}*/
 td:last-child{
-    border-right: solid 1px white;
+    border-right: solid 1px black;
 }
 table{
     margin: 0 auto;
     border-collapse: collapse;
 }
-#pred, #vjezbe, #tut{
+#predavanje, #vjezbe, #tutorijal{
     background-color: lightblue;
 }
 @media (max-width: 600px){
@@ -79,19 +61,6 @@ table{
         width: 75%;
         margin: 0 auto;
         height: 50px;
-        border: solid 1px white;
-    }
-    .sr{
-        border-right: solid 1px white!important;
-    }
-    .sl{
-        border-left: solid 1px white!important;
-    }
-    .dr{
-        border-right: solid 1px white!important;
-    }
-    .dl{
-        border-left: solid 1px white!important;
     }
     tr:first-child{
         display: none;
@@ -99,10 +68,10 @@ table{
     td:first-child{
         text-align: center;
     }
-    #pred{
+    #predavanje{
         height: 300px;
     }
-    #tut{
+    #tutorijal{
         height: 200px;
     }
     #vjezbe{
@@ -111,4 +80,5 @@ table{
     #prazan{
         display: none;
     }
+    
 }
