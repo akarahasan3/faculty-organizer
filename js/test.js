@@ -25,8 +25,16 @@ describe('raspored', function() {
     });
     //raspored.iscrtajRaspored(okvir2,["Ponedjeljak","Utorak","Srijeda","Četvrtak","Petak"],8,21);
     describe('dodajAktivnost()', function(){
-        it('trebali bismo dobiti WT predavanje u periodu od 9 do 12', function(){
+        it('trebali bismo dobiti gresku jer vremena nisu validna', function(){
             raspored.iscrtajRaspored(okvir2,["Ponedjeljak","Utorak","Srijeda","Četvrtak","Petak"],8,21);
+            let odgovor = raspored.dodajAktivnost(okvir1,"WT","predavanje",25,26,"Ponedjeljak");
+            assert.equal(odgovor, "Greška - u rasporedu ne postoji dan ili vrijeme u kojem pokušavate dodati termin", "Dobar odgovor!");
+        });
+        it('trebali bismo dobiti gresku jer vremena nisu validna', function(){
+            let odgovor = raspored.dodajAktivnost(okvir1,"WT","predavanje",10.4,12.28637,"Ponedjeljak");
+            assert.equal(odgovor, "Greška - već postoji termin u rasporedu u zadanom vremenu", "Dobar odgovor!");
+        });
+        it('trebali bismo dobiti WT predavanje u periodu od 9 do 12', function(){
             raspored.dodajAktivnost(okvir2,"WT","predavanje",9,12,"Ponedjeljak");
             let tempKolona = document.createElement("TD");
             tempKolona.setAttribute("id", "predavanje");
@@ -37,15 +45,20 @@ describe('raspored', function() {
             let string2 = tempKolona.getAttribute("id")+tempKolona.getAttribute("class")+tempKolona.getAttribute("colspan")+tempKolona.innerHTML;
             assert.equal(string1, string2, "Odgovarajuca celija!");
         });
-        it('trebali bismo dobiti gresku jer vremena nisu validna', function(){
-            raspored.iscrtajRaspored(okvir2,["Ponedjeljak","Utorak","Srijeda","Četvrtak","Petak"],8,21);
-            let odgovor = raspored.dodajAktivnost(okvir1,"WT","predavanje",25,26,"Ponedjeljak");
-            assert.equal(odgovor, "Greška - u rasporedu ne postoji dan ili vrijeme u kojem pokušavate dodati termin", "Dobar odgovor!");
+        it('trebali bismo dobiti DM tutorijal u periodu od 12 do 14:30', function(){
+            raspored.dodajAktivnost(okvir2,"DM","tutorijal",12,14.5,"Utorak");
+            let tempKolona = document.createElement("TD");
+            tempKolona.setAttribute("id", "tutorijal");
+            tempKolona.setAttribute("class", "sat120");
+            tempKolona.setAttribute("colspan", 5);
+            tempKolona.innerHTML = "<h4>DM</h4><p>tutorijal</p>";
+            let string1 = okvir2.querySelector("#tabela1").getElementsByTagName("tr")[2].cells[9].getAttribute("id")+okvir2.querySelector("#tabela1").getElementsByTagName("tr")[2].cells[9].getAttribute("class")+okvir2.querySelector("#tabela1").getElementsByTagName("tr")[2].cells[9].getAttribute("colspan")+okvir2.querySelector("#tabela1").getElementsByTagName("tr")[2].cells[9].innerHTML;
+            let string2 = tempKolona.getAttribute("id")+tempKolona.getAttribute("class")+tempKolona.getAttribute("colspan")+tempKolona.innerHTML;
+            assert.equal(string1, string2, "Odgovarajuca celija!");
         });
-        it('trebali bismo dobiti gresku jer vremena nisu validna', function(){
-            raspored.iscrtajRaspored(okvir2,["Ponedjeljak","Utorak","Srijeda","Četvrtak","Petak"],8,21);
-            let odgovor = raspored.dodajAktivnost(okvir1,"WT","predavanje",10.4,12.28637,"Ponedjeljak");
-            assert.equal(odgovor, "Greška - već postoji termin u rasporedu u zadanom vremenu", "Dobar odgovor!");
-        });
+        it('trebali bismo dobiti gresku zbog preklapanja termina', function(){
+            let odgovor = raspored.dodajAktivnost(okvir2,"DM","predavanje",13,14,"Utorak");
+            assert.equal(odgovor, "Greška - već postoji termin u rasporedu u zadanom vremenu", "Dobar odgovor jer se preklapaju termini!");
+        });   
     });
 });

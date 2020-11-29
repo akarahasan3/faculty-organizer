@@ -60,7 +60,6 @@ let raspored = (function(){
             //alert("Greška - raspored nije kreiran");
             return "Greška - raspored nije kreiran";
         }
-        //console.log(td.classList.contains("sat"+vrijemePocetak*10));
         if(vrijemePocetak > 24 || vrijemePocetak<0 || vrijemeKraj<0 || vrijemeKraj>24){
             //alert("Greška - u rasporedu ne postoji dan ili vrijeme u kojem pokušavate dodati termin");
             return "Greška - u rasporedu ne postoji dan ili vrijeme u kojem pokušavate dodati termin";
