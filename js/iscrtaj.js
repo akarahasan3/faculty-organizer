@@ -1,9 +1,11 @@
 function iscrtajRaspored(div, dani, satPocetak, satKraj){
+    div.innerHTML = "";
     if(satPocetak >= satKraj || !Number.isInteger(satKraj) || !Number.isInteger(satPocetak) || satPocetak>24 || satPocetak<0 || satKraj>24 || satKraj<0){
-        var p = document.createElement("P");
-        var t = document.createTextNode("Greška");
-        p.appendChild(t);
-        div.appendChild(p);
+        //var p = document.createElement("P");
+        //var t = document.createTextNode("Greška");
+        //p.appendChild(t);
+        //div.appendChild(p);
+        div.innerHTML = "Greska!";
         return;
     }
     var satnice = [0,2,4,6,8,10,12,15,17,19,21,23];
@@ -60,7 +62,8 @@ function dodajAktivnost(raspored, naziv, tip, vrijemePocetak, vrijemeKraj,dan){
         alert("Greška - raspored nije kreiran");
         return;
     }
-    if(vrijemePocetak > 24 || vrijemePocetak<0 || vrijemeKraj<0 || vrijemeKraj>24){
+    //console.log(raspored.getElementsByTagName("td").classList.contains("sat"+vrijemePocetak*10));
+    if(vrijemePocetak > 24 || vrijemePocetak<0 || vrijemeKraj<0 || vrijemeKraj>24 || vrijemeKraj<=vrijemePocetak){
         alert("Greška - u rasporedu ne postoji dan ili vrijeme u kojem pokušavate dodati termin");
         return;
     }
