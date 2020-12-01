@@ -60,7 +60,7 @@ let raspored = (function(){
             //alert("Greška - raspored nije kreiran");
             return "Greška - raspored nije kreiran";
         }
-        if(vrijemePocetak > 24 || vrijemePocetak<0 || vrijemeKraj<0 || vrijemeKraj>24){
+        if(vrijemePocetak > 24 || vrijemePocetak<0 || vrijemeKraj<0 || vrijemeKraj>24 || ((vrijemePocetak*10)%10 != 0 && (vrijemePocetak*10)%10 != 5) || ((vrijemeKraj*10)%10 != 0 && (vrijemeKraj*10)%10 != 5)){
             //alert("Greška - u rasporedu ne postoji dan ili vrijeme u kojem pokušavate dodati termin");
             return "Greška - u rasporedu ne postoji dan ili vrijeme u kojem pokušavate dodati termin";
         }

@@ -25,14 +25,14 @@ describe('raspored', function() {
     });
     //raspored.iscrtajRaspored(okvir2,["Ponedjeljak","Utorak","Srijeda","Četvrtak","Petak"],8,21);
     describe('dodajAktivnost()', function(){
-        it('trebali bismo dobiti gresku jer vremena nisu validna', function(){
+        it('greska jer zelimo da pristupimo 25. i 26. satu', function(){
             raspored.iscrtajRaspored(okvir2,["Ponedjeljak","Utorak","Srijeda","Četvrtak","Petak"],8,21);
             let odgovor = raspored.dodajAktivnost(okvir1,"WT","predavanje",25,26,"Ponedjeljak");
             assert.equal(odgovor, "Greška - u rasporedu ne postoji dan ili vrijeme u kojem pokušavate dodati termin", "Dobar odgovor!");
         });
-        it('trebali bismo dobiti gresku jer vremena nisu validna', function(){
+        it('greska ako vremena ne zavrsavaju na .0 ili .5', function(){
             let odgovor = raspored.dodajAktivnost(okvir1,"WT","predavanje",10.4,12.28637,"Ponedjeljak");
-            assert.equal(odgovor, "Greška - već postoji termin u rasporedu u zadanom vremenu", "Dobar odgovor!");
+            assert.equal(odgovor, "Greška - u rasporedu ne postoji dan ili vrijeme u kojem pokušavate dodati termin", "Dobar odgovor!");
         });
         it('trebali bismo dobiti WT predavanje u periodu od 9 do 12', function(){
             raspored.dodajAktivnost(okvir2,"WT","predavanje",9,12,"Ponedjeljak");

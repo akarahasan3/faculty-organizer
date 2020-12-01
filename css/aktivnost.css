@@ -3,20 +3,24 @@ body{
 }
 p{
     margin: 0;
-    font-size: 8px;
+    font-size: 12px;
 }
 h3{
     margin-top: 0px;
 }
 fieldset{
     display: inline-block;
-    border: solid 1px darkblue;
+    border: solid 1px white;
     border-radius: 10px;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
     padding: 32px;
     position: relative;
     bottom: 0;
+    transition: border-color 0.5s;
+}
+fieldset:hover{
+    border-color: cyan;
 }
 fieldset:nth-child(odd){
     border-radius: 22px;
@@ -26,15 +30,19 @@ fieldset:nth-child(2){
     height: 125px;
 }
 #aktivnosti{
-    width: 508px;
+    width: max-content;
     height: 250px;
     margin: 0 auto;
 }
 legend{
-    font-size: 10px;
+    font-size: 13px;
 }
 legend, h3, p{
-    color: darkblue;
+    color: white;
+    transition: color 0.5s;
+}
+legend:hover, h3:hover, p:hover{
+    color: cyan;
 }
 @media (max-width: 600px){
     fieldset{

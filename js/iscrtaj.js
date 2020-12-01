@@ -63,7 +63,7 @@ function dodajAktivnost(raspored, naziv, tip, vrijemePocetak, vrijemeKraj,dan){
         return;
     }
     //console.log(raspored.getElementsByTagName("td").classList.contains("sat"+vrijemePocetak*10));
-    if(vrijemePocetak > 24 || vrijemePocetak<0 || vrijemeKraj<0 || vrijemeKraj>24 || vrijemeKraj<=vrijemePocetak){
+    if(vrijemePocetak > 24 || vrijemePocetak<0 || vrijemeKraj<0 || vrijemeKraj>24 || vrijemeKraj<=vrijemePocetak || ((vrijemePocetak*10)%10 != 0 && (vrijemePocetak*10)%10 != 5) || ((vrijemeKraj*10)%10 != 0 && (vrijemeKraj*10)%10 != 5)){
         alert("Greška - u rasporedu ne postoji dan ili vrijeme u kojem pokušavate dodati termin");
         return;
     }
