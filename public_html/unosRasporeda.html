@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/forma.js"></script>
+</head>
+<body onload="Poziv.ucitajPredmete()">
+    <div>
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        <label>Naziv predmeta:</label>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Unesite ovdje" id="naziv_aktivnosti">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Tip:</label>
+                    </td>
+                    <td>
+                        <select name="tip" id="tip_aktivnosti">
+                            <option value="predavanje">Predavanje</option>
+                            <option value="vjezbe">Vježbe</option>
+                            <option value="tutorijal">Tutorijal</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Početak:</label>
+                    </td>
+                    <td>
+                        <input type="time" id="pocetak_aktivnosti">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Kraj:</label>
+                    </td>
+                    <td>
+                        <input type="time" id="kraj_aktivnosti">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Dan u sedmici:</label>
+                    </td>
+                    <td>
+                        <select name="danuSedmici" id="dan_aktivnosti">
+                            <option value="ponedjeljak">Ponedjeljak</option>
+                            <option value="utorak">Utorak</option>
+                            <option value="srijeda">Srijeda</option>
+                            <option value="cetvrtak">Četvrtak</option>
+                            <option value="petak">Petak</option>
+                        </select>
+                    </td>
+                </tr>
+                
+            </table>
+            <button onclick="Poziv.unesiAktivnost()">Potvrdi</button>
+        </form>
+    </div>
+    <div id="aktivnosti">
+        <h2>Aktivnosti</h2>
+    </div>
+    <div id="predmeti">
+        <h2>Predmeti</h2>
+    </div>
+</body>
+</html>
