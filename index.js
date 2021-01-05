@@ -103,7 +103,7 @@ app.post("/aktivnost", function(req, res){
             else if(((aktivnostPocetak*10)%10 != 0 && (aktivnostPocetak*10)%10 != 5) || ((aktivnostKraj*10)%10 != 0 && (aktivnostKraj*10)%10 != 5)) odgovara = false;
             else if(aktivnostNaziv.toString() == "" || aktivnostTip.toString() == "" || aktivnostDan.toString() == "" || aktivnostPocetak == null || aktivnostKraj == null) odgovara = false;
             else if(aktivnostDan.toString() == aktivnost[4].toString()){
-                if (aktivnostPocetak >= aktivnost[2] && aktivnostKraj <= aktivnost[3]) odgovara = false;
+                if ((aktivnostPocetak >= aktivnost[2] && aktivnostKraj <= aktivnost[3]) || (aktivnostPocetak <= aktivnost[2] && aktivnostKraj >= aktivnost[3])) odgovara = false;
                 else if(aktivnostPocetak >= aktivnost[2] && aktivnostPocetak < aktivnost[3]) odgovara = false;
                 else if(aktivnostKraj >= aktivnost[2] && aktivnostKraj < aktivnost[3]) odgovara = false;
             }

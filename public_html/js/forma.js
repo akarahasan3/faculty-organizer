@@ -39,16 +39,20 @@ var Poziv = (function(){
     function unesiAktivnost(){
         let naziv = document.getElementById("naziv_aktivnosti").value;
         let tip = document.getElementById("tip_aktivnosti").value;
-        let pocetak = document.getElementById("pocetak_aktivnosti").value.toString().substring(0,5);
-        pocetak = pocetak.replace(":", ".");
-        pocetak = parseFloat(pocetak);
-        if((pocetak*100)%100 == 50) pocetak = Math.floor(pocetak) + 0.6;
-        if(Math.floor((pocetak*100)%100) == 30) pocetak = Math.floor(pocetak) + 0.5;
+        let pocetak = document.getElementById("pocetak_aktivnosti").value;
+
+        pocetak = pocetak.split(":");
+        if(pocetak[1] == 50) pocetak[1] = pocetak[1]+1;
+        else if(pocetak[1] == 30) pocetak[1] = 50;
+        pocetak = parseFloat(parseInt(pocetak[0]) + parseFloat(pocetak[1]/100));
+        
         let kraj = document.getElementById("kraj_aktivnosti").value.toString().substring(0,5);
-        kraj = kraj.replace(":", ".");
-        kraj = parseFloat(kraj);
-        if((pocetak*100)%100 == 50) kraj = Math.floor(kraj) + 0.6;
-        if(Math.floor((pocetak*100)%100) == 30) kraj = Math.floor(kraj) + 0.5; 
+        
+        kraj = kraj.split(":");
+        if(kraj[1] == 50) kraj[1] = kraj[1]+1;
+        if(kraj[1] == 30) kraj[1] = 50;
+        kraj = parseFloat(parseInt(kraj[0]) + parseFloat(kraj[1]/100));
+
         let dan = document.getElementById("dan_aktivnosti").value;
         ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function(){
@@ -58,8 +62,6 @@ var Poziv = (function(){
             else if(ajax.readyState == 4 && ajax.status == 200){
             }
         };
-        alert(pocetak);
-        alert(kraj);
         let temp={
             naziv,
             tip,
