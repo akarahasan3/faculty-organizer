@@ -17,7 +17,6 @@ var Poziv = (function(){
         };
         ajax.open("GET", "http://localhost:3000/predmeti", true);
         ajax.send();
-        
     }
     function ucitajAktivnosti(){
         ajax.onreadystatechange = function(){

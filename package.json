@@ -1,0 +1,20 @@
+{
+  "name": "v10",
+  "version": "1.0.0",
+  "description": "",
+  "main": "primjerRelacije.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^1.5.1",
+    "sequelize": "^4.31.2"
+  },
+  "devDependencies": {
+    "mocha": "^7.0.0",
+    "supertest": "^4.0.2"
+  }
+}

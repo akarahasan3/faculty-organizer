@@ -1,7 +1,4 @@
-Web tehnologije,Tutorijal,9,10.5,Ponedjeljak
-Osnove operacionih sistema,Predavanje,11,14,Utorak
-Tehnike programiranja,Predavanje,12,14,Srijeda
-OIS,Vjezbe,9,11,Petak
-OIS,Predavanje,12,15,Srijeda
-OIS,Predavanje,10,13,Petak
+OIS,Vjezbe,9,11,petak
+OIS,Predavanje,12,15,srijeda
+OIS,Predavanje,10,13,petak
 DM,predavanje,8.5,20,cetvrtak
