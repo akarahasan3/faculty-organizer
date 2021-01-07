@@ -1,5 +1,16 @@
 DELETE;/all;null;{"message":"Uspješno obrisan sadržaj datoteka!"}
 GET;/predmeti;null;[]
+GET;/aktivnosti;null;[]
 POST;/predmet;{"naziv":"RMA"};{"message":"Uspješno dodan predmet!"}
 POST;/predmet;{"naziv":"WT"};{"message":"Uspješno dodan predmet!"}
+POST;/aktivnost;{"naziv":"WT","tip":"predavanje","pocetak":17,"kraj":18,"dan":"srijeda"};{"message":"Uspješno dodana aktivnost!"}
+POST;/aktivnost;{"naziv":"RMA","tip":"tutorijal","pocetak":9,"kraj":12,"dan":"ponedjeljak"};{"message":"Uspješno dodana aktivnost!"}
+POST;/aktivnost;{"naziv":"WT","tip":"predavanje","pocetak":17,"kraj":18,"dan":"srijeda"};{"message":"Aktivnost nije validna!"}
+GET;/predmet/WT/aktivnost;null;[{"naziv":"WT","tip":"predavanje","pocetak":17,"kraj":18,"dan":"srijeda"}]
+GET;/predmet/RMA/aktivnost;null;[{"naziv":"RMA","tip":"tutorijal","pocetak":9,"kraj":12,"dan":"ponedjeljak"}]
 GET;/predmeti;null;[{"naziv":"RMA"},{"naziv":"WT"}]
+GET;/aktivnosti;null;[{"naziv":"WT","tip":"predavanje","pocetak":17,"kraj":18,"dan":"srijeda"},{"naziv":"RMA","tip":"tutorijal","pocetak":9,"kraj":12,"dan":"ponedjeljak"}]
+DELETE;/aktivnost/WT;null;{"message":"Uspješno obrisana aktivnost!"}
+DELETE;/aktivnost/WT;null;{"message":"Greška - aktivnost nije obrisana!"}
+DELETE;/predmet/WT;null;{"message":"Uspješno obrisan predmet!"}
+DELETE;/predmet/WT;null;{"message":"Greška - predmet nije obrisan!"}

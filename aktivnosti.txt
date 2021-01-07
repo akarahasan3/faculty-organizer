@@ -1,0 +1,3 @@
+RMA,tutorijal,9,12,ponedjeljak
+OOI,vjezbe,9,10,utorak
+RMA,tutorijal,10,12,srijeda

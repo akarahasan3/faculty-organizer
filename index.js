@@ -6,6 +6,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public_html'));
 
+app.get("/", function(req, res){
+    res.sendFile(__dirname + "/public_html/unosRasporeda.html");
+});
 
 app.get("/predmeti", function(req, res){
     fs.readFile(__dirname + "/predmeti.txt",function(err,data){
@@ -21,7 +24,7 @@ app.get("/predmeti", function(req, res){
         }
         res.writeHead(200,{'Content-Type':"application/json"});
         res.end(JSON.stringify(n));}
-  );
+    );
 });
 
 app.get("/aktivnosti", function(req, res){
@@ -73,9 +76,6 @@ app.post("/predmet", function(req, res){
         var postoji = false;
         for(var i=0;i<redovi.length;i++){
             var nazivPredmeta = redovi[i];
-            console.log(predmet.length + " i " + nazivPredmeta.length);
-            console.log(predmet.substring(1,predmet.length-1));
-            console.log("Naziv "+nazivPredmeta);
             if(predmet.substring(1,predmet.length)==nazivPredmeta){
                 postoji = true;
             }
@@ -107,25 +107,14 @@ app.post("/aktivnost", function(req, res){
     fs.readFile(__dirname + "/aktivnosti.txt",function(err,data){
         var n=[];
         var tekst=data.toString();
-        if(data == ""){ //OVO NE VALJA, DODATI TESTOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            var aktivnost = aktivnostNaziv + "," + aktivnostTip + "," + aktivnostPocetak + "," + aktivnostKraj + "," + aktivnostDan;
-            fs.appendFile('aktivnosti.txt', aktivnost, function(error){
-                if(error) console.log("a-a");
-                else{
-                    var objekat = {message:"Uspješno dodana aktivnost!"};
-                    res.writeHead(200,{'Content-Type':"application/json"});
-                    res.end(JSON.stringify(objekat));
-                }
-            });
-        }
         var redovi=tekst.split("\n");
         var odgovara = true;
         for(var i=0;i<redovi.length;i++){
             var aktivnost = redovi[i].split(",");
             if(aktivnostKraj <= aktivnostPocetak || aktivnostPocetak < 8 || aktivnostKraj > 20) odgovara = false;
             else if(((aktivnostPocetak*10)%10 != 0 && (aktivnostPocetak*10)%10 != 5) || ((aktivnostKraj*10)%10 != 0 && (aktivnostKraj*10)%10 != 5)) odgovara = false;
-            else if(aktivnostNaziv.toString() == "" || aktivnostTip.toString() == "" || aktivnostDan.toString() == "" || aktivnostPocetak == null || aktivnostKraj == null) odgovara = false;
-            else if(aktivnostDan.toString() == aktivnost[4].toString()){
+            else if(aktivnostNaziv == "" || aktivnostTip == "" || aktivnostDan == "" || aktivnostPocetak == null || aktivnostKraj == null) odgovara = false;
+            else if(aktivnostDan == aktivnost[4]){
                 if ((aktivnostPocetak >= aktivnost[2] && aktivnostKraj <= aktivnost[3]) || (aktivnostPocetak <= aktivnost[2] && aktivnostKraj >= aktivnost[3])) odgovara = false;
                 else if(aktivnostPocetak >= aktivnost[2] && aktivnostPocetak < aktivnost[3]) odgovara = false;
                 else if(aktivnostKraj >= aktivnost[2] && aktivnostKraj < aktivnost[3]) odgovara = false;
@@ -138,7 +127,8 @@ app.post("/aktivnost", function(req, res){
         }
         else{
             var aktivnost = aktivnostNaziv + "," + aktivnostTip + "," + aktivnostPocetak + "," + aktivnostKraj + "," + aktivnostDan;
-            fs.appendFile('aktivnosti.txt', '\n' + aktivnost, function(error){
+            if(data != "") aktivnost = '\n'+aktivnost;
+            fs.appendFile('aktivnosti.txt', aktivnost, function(error){
                 if(error) console.log("a-a");
                 else{
                     var objekat = {message:"Uspješno dodana aktivnost!"};

@@ -3,6 +3,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+     <link rel="stylesheet" href="css/planiranjeNastavnik.css">
+    <link rel="stylesheet" href="css/navigacija.css">
+    <link rel="stylesheet" href="css/body.css">
     <script src="js/forma.js"></script>
 </head>
 <body onload="Poziv.ucitajPredmete()">
@@ -34,7 +37,7 @@
                         <label>Početak:</label>
                     </td>
                     <td>
-                        <input type="time" value="08:00" min="08:00" max="20:00" step="1800" id="pocetak_aktivnosti">
+                        <input type="time" id="pocetak_aktivnosti">
                     </td>
                 </tr>
                 <tr>
@@ -42,7 +45,7 @@
                         <label>Kraj:</label>
                     </td>
                     <td>
-                        <input type="time" value="20:00" min="08:00" max="20:00" id="kraj_aktivnosti">
+                        <input type="time" id="kraj_aktivnosti">
                     </td>
                 </tr>
                 <tr>
@@ -59,7 +62,6 @@
                         </select>
                     </td>
                 </tr>
-                
             </table>
             <button onclick="Poziv.unesiAktivnost()">Potvrdi</button>
         </form>

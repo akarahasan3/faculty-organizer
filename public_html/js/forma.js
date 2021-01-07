@@ -1,3 +1,5 @@
+var datoteka_predmeta;
+
 var Poziv = (function(){    
     var ajax = new XMLHttpRequest();
     function ucitajPredmete(){
@@ -5,11 +7,12 @@ var Poziv = (function(){
             if(ajax.status == 404 && ajax.readyState == 4)
                 throw ajax.status;
             else if(ajax.readyState == 4 && ajax.status == 200){
-                let rt = JSON.parse(ajax.responseText);
+                datoteka_predmeta = JSON.parse(ajax.responseText);
+                document.getElementById('predmeti').innerHTML = "<div id=\"predmeti\"><h2>Predmeti</h2></div>";
                 let predmeti = document.getElementById("predmeti");
-                for(var i=0; i<rt.length; i++){
+                for(var i=0; i<datoteka_predmeta.length; i++){
                     let paragraf = document.createElement("P");
-                    paragraf.innerHTML = rt[i].naziv.toString();
+                    paragraf.innerHTML = datoteka_predmeta[i].naziv.toString();
                     predmeti.appendChild(paragraf);
                 }
                 Poziv.ucitajAktivnosti();
@@ -24,6 +27,7 @@ var Poziv = (function(){
                 throw ajax.status;
             else if(ajax.readyState == 4 && ajax.status == 200){
                 let rt = JSON.parse(ajax.responseText);
+                document.getElementById('aktivnosti').innerHTML = "<div id=\"aktivnosti\"><h2>Aktivnosti</h2></div>";
                 let aktivnosti = document.getElementById("aktivnosti");
                 for(var i=0; i<rt.length; i++){
                     let paragraf = document.createElement("P");
@@ -35,8 +39,48 @@ var Poziv = (function(){
         ajax.open("GET", "http://localhost:3000/aktivnosti", true);
         ajax.send();
     }
+    function unesiPredmet(predmet){
+        ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function(){
+            if(ajax.status == 404 && ajax.readyState == 4){
+                throw ajax.status;
+            }
+            else if(ajax.readyState == 4 && ajax.status == 200){
+            }
+        };
+        let temp = {
+            naziv:predmet
+        };
+        ajax.open("POST", "http://localhost:3000/predmet", true);
+        ajax.setRequestHeader("Content-Type", "application/json");
+        ajax.send(JSON.stringify(temp));
+    }
+    function obrisiPredmet(naziv, uslov){
+        if(uslov){
+            ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function(){
+                if(ajax.status == 404 && ajax.readyState == 4){
+                    throw ajax.status;
+                }
+                else if(ajax.readyState == 4 && ajax.status == 200){
+                }
+            };
+            ajax.open("DELETE", "http://localhost:3000/predmet/"+naziv, true);
+            ajax.setRequestHeader("Content-Type", "application/json");
+            ajax.send();
+        }   
+
+    }
+
     function unesiAktivnost(){
+        Poziv.ucitajPredmete();
+        var postoji = false;
+
         let naziv = document.getElementById("naziv_aktivnosti").value;
+        datoteka_predmeta.forEach(predmet => {
+            if(predmet.naziv.toString() == naziv) postoji = true;
+        });
+        if(!postoji) Poziv.unesiPredmet(naziv);
         let tip = document.getElementById("tip_aktivnosti").value;
         let pocetak = document.getElementById("pocetak_aktivnosti").value;
 
@@ -75,6 +119,8 @@ var Poziv = (function(){
     return{
         ucitajPredmete:ucitajPredmete,
         ucitajAktivnosti:ucitajAktivnosti,
-        unesiAktivnost:unesiAktivnost
+        unesiPredmet:unesiPredmet,
+        unesiAktivnost:unesiAktivnost,
+        obrisiPredmet:obrisiPredmet
     }
 }());
