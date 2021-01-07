@@ -1,4 +1,0 @@
-OIS,Vjezbe,9,11,petak
-OIS,Predavanje,12,15,srijeda
-OIS,Predavanje,10,13,petak
-DM,predavanje,8.5,20,cetvrtak

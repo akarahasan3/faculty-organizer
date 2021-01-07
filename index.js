@@ -11,11 +11,13 @@ app.get("/predmeti", function(req, res){
     fs.readFile(__dirname + "/predmeti.txt",function(err,data){
         var n=[];
         var tekst=data.toString();
-        var redovi=tekst.split("\n");
-        for(var i=0;i<redovi.length;i++){
-              var predmet=redovi[i];
-              var objekat={naziv:predmet};
-              n.push(objekat);
+        if(data != ""){
+            var redovi=tekst.split("\n");
+            for(var i=0;i<redovi.length;i++){
+                var predmet=redovi[i];
+                var objekat={naziv:predmet};
+                n.push(objekat);
+            }
         }
         res.writeHead(200,{'Content-Type':"application/json"});
         res.end(JSON.stringify(n));}
@@ -26,28 +28,32 @@ app.get("/aktivnosti", function(req, res){
     fs.readFile(__dirname + "/aktivnosti.txt",function(err,data){
         var n=[];
         var tekst=data.toString();
-        var redovi=tekst.split("\n");
-        for(var i=0;i<redovi.length;i++){
-              var aktivnosti=redovi[i].split(",");
-              var objekat={naziv:aktivnosti[0],tip:aktivnosti[1],pocetak:Number(aktivnosti[2]),kraj:Number(aktivnosti[3]),dan:aktivnosti[4]};
-              n.push(objekat);
+        if(data != ""){
+            var redovi=tekst.split("\n");
+            for(var i=0;i<redovi.length;i++){
+                var aktivnosti=redovi[i].split(",");
+                var objekat={naziv:aktivnosti[0],tip:aktivnosti[1],pocetak:Number(aktivnosti[2]),kraj:Number(aktivnosti[3]),dan:aktivnosti[4]};
+                n.push(objekat);
+            }
         }
         res.writeHead(200,{'Content-Type':"application/json"});
-        res.end(JSON.stringify(n));}
-  );
+        res.end(JSON.stringify(n));
+    });
 });
 
 app.get("/predmet/:naziv/aktivnost", function(req, res){
     fs.readFile(__dirname + "/aktivnosti.txt",function(err,data){
         var n=[];
         var tekst=data.toString();
-        var redovi=tekst.split("\n");
-        for(var i=0;i<redovi.length;i++){
-            var aktivnosti=redovi[i].split(",");
-            if(aktivnosti[0] == req.params.naziv)
-            {
-                var objekat={naziv:aktivnosti[0],tip:aktivnosti[1],pocetak:Number(aktivnosti[2]),kraj:Number(aktivnosti[3]),dan:aktivnosti[4]};
-                n.push(objekat);
+        if(data != ""){
+            var redovi=tekst.split("\n");
+            for(var i=0;i<redovi.length;i++){
+                var aktivnosti=redovi[i].split(",");
+                if(aktivnosti[0] == req.params.naziv)
+                {
+                    var objekat={naziv:aktivnosti[0],tip:aktivnosti[1],pocetak:Number(aktivnosti[2]),kraj:Number(aktivnosti[3]),dan:aktivnosti[4]};
+                    n.push(objekat);
+                }
             }
         }
         res.writeHead(200,{'Content-Type':"application/json"});
@@ -56,15 +62,21 @@ app.get("/predmet/:naziv/aktivnost", function(req, res){
 });
 
 app.post("/predmet", function(req, res){
-    const predmet = req.body.naziv;
+    var predmet = req.body.naziv;
     fs.readFile(__dirname + "/predmeti.txt",function(err,data){
         var n=[];
         var tekst=data.toString();
+        if(data != ""){
+            predmet = '\n'+predmet;
+        }
         var redovi=tekst.split("\n");
         var postoji = false;
         for(var i=0;i<redovi.length;i++){
             var nazivPredmeta = redovi[i];
-            if(nazivPredmeta == predmet){
+            console.log(predmet.length + " i " + nazivPredmeta.length);
+            console.log(predmet.substring(1,predmet.length-1));
+            console.log("Naziv "+nazivPredmeta);
+            if(predmet.substring(1,predmet.length)==nazivPredmeta){
                 postoji = true;
             }
         }
@@ -74,7 +86,7 @@ app.post("/predmet", function(req, res){
             res.end(JSON.stringify(objekat));
         }
         else{
-            fs.appendFile('predmeti.txt', '\n' + predmet, function(error){
+            fs.appendFile('predmeti.txt', predmet, function(error){
                 if(error) console.log("a-a");
                 else{
                     var objekat = {message:"Uspješno dodan predmet!"};
@@ -95,6 +107,17 @@ app.post("/aktivnost", function(req, res){
     fs.readFile(__dirname + "/aktivnosti.txt",function(err,data){
         var n=[];
         var tekst=data.toString();
+        if(data == ""){ //OVO NE VALJA, DODATI TESTOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            var aktivnost = aktivnostNaziv + "," + aktivnostTip + "," + aktivnostPocetak + "," + aktivnostKraj + "," + aktivnostDan;
+            fs.appendFile('aktivnosti.txt', aktivnost, function(error){
+                if(error) console.log("a-a");
+                else{
+                    var objekat = {message:"Uspješno dodana aktivnost!"};
+                    res.writeHead(200,{'Content-Type':"application/json"});
+                    res.end(JSON.stringify(objekat));
+                }
+            });
+        }
         var redovi=tekst.split("\n");
         var odgovara = true;
         for(var i=0;i<redovi.length;i++){
