@@ -2,9 +2,21 @@ const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const app = express();
+const db = require('./db.js');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public_html'));
+
+db.sequelize.sync({force:true}).then(function(){
+    inicializacija().then(function(){
+        console.log("Gotovo kreiranje tabela i ubacivanje pocetnih podataka!");
+        process.exit();
+    });
+});
+
+function inicializacija(){
+    //sutra
+}
 
 app.get("/", function(req, res){
     res.sendFile(__dirname + "/public_html/unosRasporeda.html");
