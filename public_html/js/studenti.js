@@ -37,9 +37,7 @@ var Poziv = (function(){
             if(ajax.status == 404 && ajax.readyState == 4)
                 throw ajax.status;
             else if(ajax.readyState == 4 && ajax.status == 200){
-                var obj = JSON.parse(ajax.responseText);
-                if(obj.message.contains("nije kreiran"))
-                    alert(obj.message);
+                alert(JSON.parse(ajax.responseText).message);
             }
         }
         ajax.open("POST", "http://localhost:3000/v2/student", true);

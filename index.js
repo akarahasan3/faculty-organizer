@@ -85,7 +85,7 @@ function postojiTip(ime){
         var returnMessage = 0;
         db.tip.findAll().then(function(data){
             for(var i = 0; i<data.length; i++){
-                if(data[i].naziv.toString() === indeks){
+                if(data[i].naziv.toString() === ime){
                     returnMessage = {
                         message: "Tip " + ime + " nije kreiran jer vec postoji"
                     };
@@ -115,7 +115,7 @@ app.post("/v2/student", async function(req, res){
             });
         });
         res.writeHead(200,{'Content-Type':"application/json"});
-        res.end(JSON.stringify({message: "Uspjesno unesen student"}));
+        res.end(JSON.stringify({message: "Uspjesno unesen student " + req.body.ime}));
     }
 });
 app.post("/v2/predmet", async function(req, res){
@@ -130,7 +130,7 @@ app.post("/v2/predmet", async function(req, res){
             predmetiListaPromisea.push(db.predmet.create({naziv:req.body.naziv}));
         });
         res.writeHead(200,{'Content-Type':"application/json"});
-        res.end(JSON.stringify({message: "Uspjesno unesen predmet"}));
+        res.end(JSON.stringify({message: "Uspjesno unesen predmet " + req.body.naziv}));
     }
 });
 app.post("/v2/grupa", async function(req, res){
@@ -139,21 +139,23 @@ app.post("/v2/grupa", async function(req, res){
         res.writeHead(200,{'Content-Type':"application/json"});
         res.end(JSON.stringify(postoji));
     }
-    var grupeListaPromisea=[];
-    var litaStudenata = req.body.students;
-    new Promise(function(resolve, reject){
-        grupeListaPromisea.push(db.grupa.create({naziv:req.body.naziv, predmetId:req.body.predmetId}));
-        Promise.all(grupeListaPromisea).then(function(data){
-            for(var i = 0; i < litaStudenata.length; i++){
-                db.student.findOne({where:{id:litaStudenata[i]}}).then(function(data1){
-                    data1.setGrupa(data[0]);
-                });
-            }
-            return new Promise(function(resolve,reject){resolve(data[0]);});
+    else{
+        var grupeListaPromisea=[];
+        var litaStudenata = req.body.students;
+        new Promise(function(resolve, reject){
+            grupeListaPromisea.push(db.grupa.create({naziv:req.body.naziv, predmetId:req.body.predmetId}));
+            Promise.all(grupeListaPromisea).then(function(data){
+                for(var i = 0; i < litaStudenata.length; i++){
+                    db.student.findOne({where:{id:litaStudenata[i]}}).then(function(data1){
+                        data1.setGrupa(data[0]);
+                    });
+                }
+                return new Promise(function(resolve,reject){resolve(data[0]);});
+            });
         });
-    });
-    res.writeHead(200,{'Content-Type':"application/json"});
-    res.end(JSON.stringify({message: "Uspjesno unesena grupa"}));
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify({message: "Uspjesno unesena grupa " + req.body.naziv}));
+    }
 });
 app.post("/v2/aktivnost", function(req, res){
     var aktivnostiListaPromisea=[];
@@ -168,25 +170,29 @@ app.post("/v2/dan", async function(req, res){
         res.writeHead(200,{'Content-Type':"application/json"});
         res.end(JSON.stringify(postoji));
     }
-    var daniListaPromisea=[];
-    new Promise(function(resolve, reject){
-        daniListaPromisea.push(db.dan.create({naziv:req.body.naziv, aktivnostId:req.body.aktivnostId}));
-    });
-    res.writeHead(200,{'Content-Type':"application/json"});
-    res.end(JSON.stringify({message: "Uspjesno unesen dan"}));
+    else{
+        var daniListaPromisea=[];
+        new Promise(function(resolve, reject){
+            daniListaPromisea.push(db.dan.create({naziv:req.body.naziv, aktivnostId:req.body.aktivnostId}));
+        });
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify({message: "Uspjesno unesen dan " + req.body.naziv}));
+    }
 });
 app.post("/v2/tip", async function(req, res){
-    var postoji = await postojiGrupa(req.body.naziv);
+    var postoji = await postojiTip(req.body.naziv);
     if(postoji !== 0){
         res.writeHead(200,{'Content-Type':"application/json"});
         res.end(JSON.stringify(postoji));
     }
-    var tipoviListaPromisea=[];
-    new Promise(function(resolve, reject){
-        tipoviListaPromisea.push(db.tip.create({naziv:req.body.naziv, aktivnostId:req.body.aktivnostId}));
-    });
-    res.writeHead(200,{'Content-Type':"application/json"});
-    res.end(JSON.stringify({message: "Uspjesno unesen tip"}));
+    else{
+        var tipoviListaPromisea=[];
+        new Promise(function(resolve, reject){
+            tipoviListaPromisea.push(db.tip.create({naziv:req.body.naziv, aktivnostId:req.body.aktivnostId}));
+        });
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify({message: "Uspjesno unesen tip " + req.body.naziv}));
+    }
 });
 app.get("/v2/student", function(req, res){
     var objekat;
@@ -416,49 +422,85 @@ app.get("/v2/tip/:id", function(req, res){
 app.delete("/v2/student/:id", function(req, res){
     db.student.destroy({
         where: {id:req.params.id}
-    }).then(()=>{
-        res.writeHead(200,{'Content-Type':"application/json"});
-        res.end();
+    }).then(izbrisan=>{
+        if(izbrisan === 0){
+            res.writeHead(404,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Student s id-em " + req.params.id + " ne postoji"}));
+        }
+        else{
+            res.writeHead(200,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Uspjesno izbrisan student"}));
+        }
     });
 });
 app.delete("/v2/aktivnost/:id", function(req, res){
     db.aktivnost.destroy({
         where: {id:req.params.id}
-    }).then(()=>{
-        res.writeHead(200,{'Content-Type':"application/json"});
-        res.end();
+    }).then(izbrisan=>{
+        if(izbrisan === 0){
+            res.writeHead(404,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Aktivnost s id-em " + req.params.id + " ne postoji"}));
+        }
+        else{
+            res.writeHead(200,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Uspjesno izbrisana aktivnost"}));
+        }
     });
 });
 app.delete("/v2/dan/:id", function(req, res){
     db.dan.destroy({
         where: {id:req.params.id}
-    }).then(()=>{
-        res.writeHead(200,{'Content-Type':"application/json"});
-        res.end();
+    }).then(izbrisan=>{
+        if(izbrisan === 0){
+            res.writeHead(404,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Dan s id-em " + req.params.id + " ne postoji"}));
+        }
+        else{
+            res.writeHead(200,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Uspjesno izbrisan dan"}));
+        }
     });
 });
 app.delete("/v2/grupa/:id", function(req, res){
     db.grupa.destroy({
         where: {id:req.params.id}
-    }).then(()=>{
-        res.writeHead(200,{'Content-Type':"application/json"});
-        res.end();
+    }).then(izbrisan=>{
+        if(izbrisan === 0){
+            res.writeHead(404,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Grupa s id-em " + req.params.id + " ne postoji"}));
+        }
+        else{
+            res.writeHead(200,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Uspjesno izbrisana grupa"}));
+        }
     });
 });
 app.delete("/v2/predmet/:id", function(req, res){
     db.predmet.destroy({
         where: {id:req.params.id}
-    }).then(()=>{
-        res.writeHead(200,{'Content-Type':"application/json"});
-        res.end();
+    }).then(izbrisan=>{
+        if(izbrisan === 0){
+            res.writeHead(404,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Predmet s id-em " + req.params.id + " ne postoji"}));
+        }
+        else{
+            res.writeHead(200,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Uspjesno izbrisan predmet"}));
+        }
     });
 });
 app.delete("/v2/tip/:id", function(req, res){
     db.tip.destroy({
         where: {id:req.params.id}
     }).then(()=>{
-        res.writeHead(200,{'Content-Type':"application/json"});
-        res.end();
+        if(izbrisan === 0){
+            res.writeHead(404,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Tip s id-em " + req.params.id + " ne postoji"}));
+        }
+        else{
+            res.writeHead(200,{'Content-Type':"application/json"});
+            res.end(JSON.stringify({message:"Uspjesno izbrisan tip"}));
+        }
     });
 });
 
