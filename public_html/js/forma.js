@@ -18,7 +18,7 @@ var Poziv = (function(){
                 Poziv.ucitajAktivnosti();
             }
         };
-        ajax.open("GET", "http://localhost:3000/predmeti", true);
+        ajax.open("GET", "http://localhost:3000/v1/predmeti", true);
         ajax.send();
     }
     function ucitajAktivnosti(){
@@ -36,7 +36,7 @@ var Poziv = (function(){
                 }
             }
         };
-        ajax.open("GET", "http://localhost:3000/aktivnosti", true);
+        ajax.open("GET", "http://localhost:3000/v1/aktivnosti", true);
         ajax.send();
     }
     function unesiPredmet(predmet){
@@ -51,7 +51,7 @@ var Poziv = (function(){
         let temp = {
             naziv:predmet
         };
-        ajax.open("POST", "http://localhost:3000/predmet", true);
+        ajax.open("POST", "http://localhost:3000/v1/predmet", true);
         ajax.setRequestHeader("Content-Type", "application/json");
         ajax.send(JSON.stringify(temp));
     }
@@ -65,7 +65,7 @@ var Poziv = (function(){
                 else if(ajax.readyState == 4 && ajax.status == 200){
                 }
             };
-            ajax.open("DELETE", "http://localhost:3000/predmet/"+naziv, true);
+            ajax.open("DELETE", "http://localhost:3000/v1/predmet/"+naziv, true);
             ajax.setRequestHeader("Content-Type", "application/json");
             ajax.send();
         }   
@@ -112,7 +112,7 @@ var Poziv = (function(){
             kraj,
             dan
         };
-        ajax.open("POST", "http://localhost:3000/aktivnost", true);
+        ajax.open("POST", "http://localhost:3000/v1/aktivnost", true);
         ajax.setRequestHeader("Content-Type", "application/json");
         ajax.send(JSON.stringify(temp));
     }

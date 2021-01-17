@@ -15,10 +15,18 @@ db.student = sequelize.import(__dirname+'/student.js');
 
 //relacije
 // Veze 1-n
-db.predmet.hasMany(db.grupa,{as:'predmetGrupa'});
-db.predmet.hasMany(db.aktivnost,{as:'predmetAktivnost'});
-db.aktivnost.hasMany(db.dan,{as:'aktivnostDan'});
-db.aktivnost.hasMany(db.tip,{as:'aktivnostTip'});
+db.predmet.hasMany(db.grupa,{as:'predmetGrupa', foreignKey:{allowNull:false}});
+db.grupa.belongsTo(db.predmet);
+db.predmet.hasMany(db.aktivnost,{as:'predmetAktivnost', foreignKey:{allowNull:false}});
+db.aktivnost.belongsTo(db.predmet);
+db.aktivnost.hasMany(db.dan,{as:'aktivnostDan', foreignKey:{allowNull:false}});
+db.dan.belongsTo(db.aktivnost);
+db.aktivnost.hasMany(db.tip,{as:'aktivnostTip', foreignKey:{allowNull:false}});
+db.tip.belongsTo(db.aktivnost);
+
+// Veza 0-n
+db.grupa.hasMany(db.aktivnost,{as:'grupaAktivnost'});
+db.aktivnost.belongsTo(db.grupa);
 
 // Veza n-m autor moze imati vise knjiga, a knjiga vise autora
 db.studentGrupa=db.grupa.belongsToMany(db.student,{as:'student',through:'student_grupa',foreignKey:'grupaId'});
