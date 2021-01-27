@@ -1,3 +1,4 @@
+var textarea = "";
 var Poziv = (function(){    
     var ajax = new XMLHttpRequest();
     function ucitajGrupe(){
@@ -20,6 +21,7 @@ var Poziv = (function(){
     }
     function dodajStudenteuGrupu(){
         var studenti = document.getElementById('studenticsv').value.toString().split('\n');
+        document.getElementById('studenticsv').value = "";
         for(var i = 0; i<studenti.length; i++){
             var stud = studenti[i].split(',');
             var temp = {
@@ -29,15 +31,18 @@ var Poziv = (function(){
             };
             Poziv.dodajStudenta(temp);
         }
-        
     }
     function dodajStudenta(student){
         ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function(){
-            if(ajax.status == 404 && ajax.readyState == 4)
+            if(ajax.status == 404 && ajax.readyState == 4){
                 throw ajax.status;
+            }
             else if(ajax.readyState == 4 && ajax.status == 200){
-                alert(JSON.parse(ajax.responseText).message);
+            }
+            if(textarea !== JSON.parse(this.response).message.toString() + '\n'){
+                textarea = JSON.parse(this.response).message.toString() + '\n';
+                document.getElementById('studenticsv').value += textarea;
             }
         }
         ajax.open("POST", "http://localhost:3000/v2/student", true);

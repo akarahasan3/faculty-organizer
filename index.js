@@ -506,19 +506,27 @@ app.delete("/v2/tip/:id", function(req, res){
 
 ///////////////////////////////////
 
-app.put("/v2/student/:id",function(req,res){
-    db.student.update({
-        ime: req.body.ime,
-        index: req.body.index
-    }, {
-        where: { id: req.params.id },
-        returning: true,
-        plain: true
-    });
-    res.end();
+app.put("/v2/student/:id", async function(req,res){
+    var postoji = await postojiStudent(req.body.ime, req.body.index);
+    if(postoji !== 0){
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify(postoji));
+    }
+    else{
+        db.student.update({
+            ime: req.body.ime,
+            index: req.body.index
+        }, {
+            where: { id: req.params.id },
+            returning: true,
+            plain: true
+        });
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify({message:"Uspjesno azuriran student " + req.body.ime}));
+    }
 });
 
-app.put("/v2/aktivnost/:id",function(req,res){
+app.put("/v2/aktivnost/:id", async function(req,res){
     db.aktivnost.update({
         naziv: req.body.naziv,
         pocetak: req.body.pocetak,
@@ -529,51 +537,82 @@ app.put("/v2/aktivnost/:id",function(req,res){
         plain: true
     });
     res.end();
+    //treba vratiti apdejtovan objekat
+});
+app.put("/v2/dan/:id", async function(req,res){
+    var postoji = await postojiDan(req.body.naziv);
+    if(postoji !== 0){
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify(postoji));
+    }
+    else{
+        db.dan.update({
+            naziv: req.body.naziv
+        }, {
+            where: { id: req.params.id },
+            returning: true,
+            plain: true
+        });
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify({message:"Uspjesno azuriran dan " + req.body.naziv}));
+    }
     //then funkcija treba vratiti apdejtovan objekat
 });
-app.put("/v2/dan/:id",function(req,res){
-    db.dan.update({
-        naziv: req.body.naziv
-    }, {
-        where: { id: req.params.id },
-        returning: true,
-        plain: true
-    });
-    res.end();
+app.put("/v2/grupa/:id", async function(req,res){
+    var postoji = await postojiGrupa(req.body.naziv);
+    if(postoji !== 0){
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify(postoji));
+    }
+    else{
+        db.grupa.update({
+            naziv: req.body.naziv
+        }, {
+            where: { id: req.params.id },
+            returning: true,
+            plain: true
+        });
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify({message:"Uspjesno azurirana grupa " + req.body.naziv}));
+    }
     //then funkcija treba vratiti apdejtovan objekat
 });
-app.put("/v2/grupa/:id",function(req,res){
-    db.grupa.update({
-        naziv: req.body.naziv
-    }, {
-        where: { id: req.params.id },
-        returning: true,
-        plain: true
-    });
-    res.end();
+app.put("/v2/predmet/:id", async function(req,res){
+    var postoji = await postojiPredmet(req.body.naziv);
+    if(postoji !== 0){
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify(postoji));
+    }
+    else{
+        db.predmet.update({
+            naziv: req.body.naziv
+        }, {
+            where: { id: req.params.id },
+            returning: true,
+            plain: true
+        });
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify({message: "Uspjesno azuriran predmet " + req.body.naziv}));
+    }
     //then funkcija treba vratiti apdejtovan objekat
 });
-app.put("/v2/predmet/:id",function(req,res){
-    db.predmet.update({
-        naziv: req.body.naziv
-    }, {
-        where: { id: req.params.id },
-        returning: true,
-        plain: true
-    });
-    res.end();
-    //then funkcija treba vratiti apdejtovan objekat
-});
-app.put("/v2/tip/:id",function(req,res){
-    db.tip.update({
-        naziv: req.body.naziv
-    }, {
-        where: { id: req.params.id },
-        returning: true,
-        plain: true
-    });
-    res.end();
-    //then funkcija treba vratiti apdejtovan objekat
+app.put("/v2/tip/:id", async function(req,res){
+    var postoji = await postojiTip(req.body.naziv);
+    if(postoji !== 0){
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify(postoji));
+    }
+    else{
+        db.tip.update({
+            naziv: req.body.naziv
+        }, {
+            where: { id: req.params.id },
+            returning: true,
+            plain: true
+        });
+        res.writeHead(200,{'Content-Type':"application/json"});
+        res.end(JSON.stringify({message: "Uspjesno azuriran tip " + req.body.naziv}));
+    }
 });
 
 
